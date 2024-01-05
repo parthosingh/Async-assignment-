@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 300px;
+            height: 600px;
+        }
+
+        button{
+            height: 100px;
+            width: 200px;
+            font-size: 40px;
+            cursor: pointer;
+           
+        }
+        button:hover{
+           background-color: black;
+           color: white;
+        }
+        .btn{
+            margin-top: 100px;
+           
+        }
+
+    </style>
+</head>
+<body>
+        
+          <img src="" alt="">
+          <div class="btn">
+        <button onclick="Slide()">Slider</button>
+        <button onclick="next()">Next</button>
+        <button onclick="previous()">Previous</button>
+
+    </div>
+    
+</body>
+<script>
+    let Slider=false
+   let img= document.querySelector("img")
+   let currentImage=0
+    let arr=[
+        "https://th.bing.com/th?id=OIP.v7D7u4DktIJff9Z7Ie92UQHaJ4&w=216&h=288&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2",
+        "https://4.bp.blogspot.com/-Qve0iM9XbcY/Uuf5yt_C5eI/AAAAAAAABqo/avcNZLIJcJw/s1600/cartoons+wall+view24+(7).jpg",
+        "https://th.bing.com/th/id/R.7b77bd0a46014144cae287224cab6f0c?rik=x0QPnzOXGNIeYw&riu=http%3a%2f%2f7428.net%2fwp-content%2fuploads%2f2013%2f10%2fCartoon-Teddy-Bear-Vector.jpg&ehk=eqv8S%2bQ3iIVYvvQRGmJkTVL3HI8Db6gXbeHAR3Rfhak%3d&risl=&pid=ImgRaw&r=0",
+        "https://th.bing.com/th/id/OIP.SjAg2Xk-aAOCoZDjQ6pXxwHaHa?w=5000&h=5000&rs=1&pid=ImgDetMain",
+        "https://www.jamiesale-cartoonist.com/wp-content/uploads/cartoon-duck-free.png",
+        "https://th.bing.com/th/id/OIP.gpqcEgifu-i4lC8ilRWTNwAAAA?w=406&h=645&rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/R.fc29a4cb6dc14125a65e063ad84ff8d6?rik=uGK52SVvi5jVdA&riu=http%3a%2f%2fimg3.wikia.nocookie.net%2f__cb20140726052228%2fnickplus%2fimages%2fe%2fe8%2fOggy.jpg&ehk=E2VsEVovikRgiB9LreD0KMhFrms05LrB36J%2fGa1fgGQ%3d&risl=&pid=ImgRaw&r=0",
+        "https://yt3.ggpht.com/a/AATXAJx2HaVIWxoKT-4n7kClPSK2ZRNg6AM2_Ad-bIUr=s900-c-k-c0xffffffff-no-rj-mo",
+        "https://i.pinimg.com/originals/d1/af/08/d1af081b22814455d6cda0a51d5cad45.jpg",
+        "https://th.bing.com/th/id/OIP.s40KbOOeV4GSochFJmZtVQHaFj?rs=1&pid=ImgDetMain",
+        "https://yt3.googleusercontent.com/ytc/AL5GRJX6EyfWezC1AHrvyA-D1EwrS0Nvc-T0QMKffXls6_g=s900-c-k-c0x00ffffff-no-rj",
+        "https://th.bing.com/th/id/OIP.PCp_sCaufw0JdObtmImOcgHaKe?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/R.81bbe1dc5f3a5093d5693e1e1b9d2672?rik=ow25789I%2fWVlJw&riu=http%3a%2f%2f1.bp.blogspot.com%2f-htyRa_WW4Vk%2fVTvPy0NUt6I%2fAAAAAAAAPcA%2f1pttFIVWql8%2fs1600%2fgod_of_the_universe_1557653339.1680x0.jpg&ehk=fSwa1n1YKPGb5Kdz7kRfTjSSD1zNhNnQ6a0siQhObC8%3d&risl=&pid=ImgRaw&r=0",
+        "https://3.bp.blogspot.com/-9Zim-c2_U04/VKru-D-nX0I/AAAAAAAAAH8/htCewpj0xmk/s1600/planetaryhierarchy.jpg",
+        "https://cdn11.bigcommerce.com/s-x49po/images/stencil/1280x1280/products/50500/67062/Maharana_Pratap_option_Fizdi_Vimanika_Arts__72204.1589018860.jpg?c=2",
+        "https://th.bing.com/th/id/OIP.DS7QkXRwTj5xlUEeiR1jRQAAAA?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/OIP.kKjbGKgDr0EpgnqzPh-63wHaHM?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/OIP.5738sHFcjpzZCQjb2Yx-RQHaPR?w=115&h=203&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+        "https://th.bing.com/th/id/OIP.DBkzfo72ahSVAWu70EFbxwHaHa?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/R.7b33a3f416e11704a2612f2dc5aff7fd?rik=YuwrF7i01N23Bg&riu=http%3a%2f%2fwallpapercave.com%2fwp%2f2tRYroN.jpg&ehk=yyV7d7Z6C5zaWciQTigX6oJojyWliGWmMS%2fCeG6vb2E%3d&risl=&pid=ImgRaw&r=0"
+    ]
+
+   img.setAttribute('src',arr[currentImage])
+
+
+function previous(){
+currentImage--;
+
+if (currentImage<0){
+    currentImage=arr.length-1
+}
+img.setAttribute('src',arr[currentImage])
+
+}
+
+function next(){
+    currentImage++
+    
+    if(currentImage>=arr.length){
+        currentImage=0;
+    }
+    img.setAttribute('src',arr[currentImage])
+}
+
+
+function Slide(){
+setInterval(()=>{
+    
+    img.setAttribute('src',arr[currentImage])
+    currentImage++
+    if(currentImage>=arr.length){
+        currentImage=0
+    }
+},2000)
+}
+
+</script>
+</html>

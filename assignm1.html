@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+</head>
+<body>
+    <div class="stopwatch">0:00:000</div>
+
+    <button onclick="start()">start</button>
+    <button onclick="pause()">pause</button>
+
+    <button onclick="reset()">reset</button>
+</body>
+
+<script>
+
+    let timer;
+    let milliseconds=0;
+    let minute=0;
+    let seconds =0;
+
+    function start() {
+        timer= setInterval(stopwatch,10)
+    }
+
+    function pause() {
+        clearInterval(timer)
+    }
+
+    function reset() {
+        clearInterval(timer);
+        milliseconds=0
+        minute=0
+        seconds=0
+        document.querySelector(".stopwatch").textContent=`${minutes}:${seconds}:${milliseconds}`;
+    }
+
+   function stopwatch() {
+    milliseconds +=10;
+
+    if(milliseconds === 1000){
+        milliseconds=0;
+        seconds++
+    }
+    if(seconds === 60 ){
+        seconds=0;
+        minutes++;
+    }
+    let displayMilliseconds = milliseconds < 10 ? `00${milliseconds} ` :milliseconds < 100 ? `0${milliseconds}` : milliseconds;
+    let displayMinutes = minute < 10 ? `0${minute}`: minute;
+    let displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+    document.querySelector(".stopwatch").textContent= `${displayMinutes}:${displaySeconds}:${displayMilliseconds}`
+}
+</script>
+</html>
